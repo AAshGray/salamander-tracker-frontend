@@ -1,5 +1,12 @@
+
 export default function Videos() {
+    
     return (
-        <p>Videos page</p>
+        <main>
+            <h1>Salamander Video List</h1>
+            <ul>
+                <li>Video - </li>
+            </ul>
+        </main>
     )
 }
