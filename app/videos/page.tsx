@@ -7,7 +7,6 @@ export default function Videos() {
             <ul>
                 {/* link components goes here */}
                 <li><Link href="videos/preview">Example List Item</Link></li>
-                
             </ul>
         </main>
     );
