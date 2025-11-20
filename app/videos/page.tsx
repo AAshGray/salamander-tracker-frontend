@@ -1,19 +1,30 @@
-import Link from "next/link"
+'use client'
 import Image from "next/image"
-import sala1 from "../../public/VideoSala1.jpg"
-import sala2 from "../../public/VideoSala2.jpg"
+import sala1 from "@/public/VideoSala1.jpg"
+import sala2 from "@/public/VideoSala2.jpg"
+import VideoList from "@/components/videolist"
+import {useState, useEffect} from 'react'
+import { fetchVideos } from "@/lib/fetchVideos";
+import {fakeVideos} from "@/mock/mock"
 
-export default function Videos() {
+export default function Page() {
+    const [videos, setVideos] = useState<string[]>([]);
     
+    useEffect(() => {
+        // fetchVideos()
+        //     .then(data => setVideos(data))
+        //     .catch(console.error);
+        setVideos(fakeVideos);
+    }, []);
+
     return (
         <main>
-            <Image src={sala1} alt="" width={300} height={1000}></Image>
+            <Image src={sala1} alt="" width={300} height={1000} />
             <h1>Salamander Video List</h1>
-            <ul>
-                {/* link components goes here */}
-                <li><Link href="videos/preview">Example List Item</Link></li>
-            </ul>
-            <Image src={sala2} alt="" width={300} height={1000}></Image>
+            <VideoList 
+                videos={videos}
+            />
+            <Image src={sala2} alt="" width={300} height={1000} />
         </main>
     );
 }
