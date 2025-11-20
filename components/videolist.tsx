@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 type Props = {
   videos: string[];
 };
@@ -11,7 +13,7 @@ export default function VideoList({ videos }: Props) {
   return (
     <ul>
       {videos.map((name, index) => (
-        <li key={index}>{name}</li>
+        <li key={index}><Link href={`/preview/${encodeURIComponent(name)}`}>{name}</Link></li>
       ))}
     </ul>
   );

@@ -1,4 +1,7 @@
-export default function Thumbnails() {
+export default function Thumbnails({name}) {
+    
+
+    
     return (
         
     )
