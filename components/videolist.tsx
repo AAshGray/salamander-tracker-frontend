@@ -1,4 +1,3 @@
-im[]
 type Props = {
   videos: string[];
 };

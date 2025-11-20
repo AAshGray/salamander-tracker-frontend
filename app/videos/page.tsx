@@ -4,7 +4,7 @@ import sala1 from "@/public/VideoSala1.jpg"
 import sala2 from "@/public/VideoSala2.jpg"
 import VideoList from "@/components/videolist"
 import {useState, useEffect} from 'react'
-import { fetchVideos } from "@/lib/fetchVideos";
+// import { fetchVideos } from "@/lib/fetchVideos";
 import {fakeVideos} from "@/mock/mock"
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
         // fetchVideos()
         //     .then(data => setVideos(data))
         //     .catch(console.error);
-        setVideos(fakeVideos);
+        Promise.resolve().then(() => setVideos(fakeVideos));
     }, []);
 
     return (
