@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export default function Preview() {
     return (
-        <div>
+        <div id="preview-page">
             {/* Image placeholder */}
             <div className="image-target-select">
                 <label htmlFor="color-picker">Target Color: 

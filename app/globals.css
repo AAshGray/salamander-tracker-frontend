@@ -81,4 +81,25 @@ button:hover {
 #video-page {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+#SalaList {
+  padding: 80px;
+  justify-content: center;
+}
+
+li {
+  list-style-type: circle;
+}
+
+#preview-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.image-target-select {
+  display: flex;
+  flex-direction: column;
 }
