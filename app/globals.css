@@ -39,7 +39,7 @@ div.flex{
 }
 
 .flex {
-  background-color: rgba(255, 235, 214, 0.4);
+  background-color: #ffebd666;
   justify-content: center;
 }
 
@@ -67,7 +67,7 @@ button {
   color:#ffffff;
   border-color: #794e0a;
   border-width: 4px;
-  border-style: groove;
+  border-style: ridge;
   padding-left: 10%;
   padding-right: 10%;
 }
@@ -102,4 +102,9 @@ li {
 .image-target-select {
   display: flex;
   flex-direction: column;
+}
+
+header {
+  background-color: #794e0a;
+  color: #ffebd6;
 }
