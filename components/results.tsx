@@ -3,13 +3,13 @@ import { useParams } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
 
-export default function Results() {
+export default function Results({threshold, targetColor, video}) {
     const params = useParams()
     const [processing, setProcessing] = useState(false)
 
     async function process() {
         if (!processing) {
-            console.log("Processing video with params:", params)
+            console.log(`Processing video with video ${video}, target color ${targetColor}, threshold ${threshold}`)
             setProcessing(true)
 
             try {
