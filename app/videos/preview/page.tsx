@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link"
 import Image from "next/image"
+import Results from "@/components/results"
 import {useState, useEffect} from 'react'
 import placeholderThumbnailImg from '@/mock/thumbnail/Thumbnail.jpg'
 import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
@@ -8,15 +9,7 @@ import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
 export default function Preview() {
     const [videoThumbnail, setVideoThumbnail] = useState(placeholderThumbnailImg)
     const [binarizedThumbnail, setBinarizedThumbnail] = useState(binarizedThumbnailImg)
-    const [processing, setProcessing] = useState(false)
 
-    function process() {
-        if (!processing) { // prevent multiple clicks
-            setProcessing(true)
-
-            // Set up fetch request for job
-        }
-    }
     
     useEffect(() => {
         //actual fetch
@@ -44,7 +37,6 @@ export default function Preview() {
                 <label htmlFor="range-slider">Threshold: 
                     <input type="range" id="range-slider" min="0" max="455" defaultValue={50}/>
                 </label>
-                <p><button onClick={process}>Placeholder Button</button></p>
             </div>
             <Image 
                 className="preview-thumb"
@@ -54,8 +46,12 @@ export default function Preview() {
                 height={320}
                 placeholder="blur"
             />
-            <div className="preview-controls" style={{visibility: processing ? 'visible' : 'hidden'}}>
-                <Link href="/videos" className="preview-link">Processing... </Link>
+            <div className="preview-controls">
+                <Results 
+                    // video=
+                    // targetColor=
+                    // threshold=
+                />
             </div>
         </div>
     )
