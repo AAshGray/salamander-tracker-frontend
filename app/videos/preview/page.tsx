@@ -23,29 +23,32 @@ export default function Preview() {
 
     return (
         <div id="preview-page">
-            <Image 
-                className="preview-thumb"
-                src={videoThumbnail || placeholderThumbnailImg} 
-                alt='video thumbnail' 
-                width={320}
-                height={320}
-            />
-            <div className="image-target-select">
-                <label htmlFor="color-picker">Target Color: 
-                    <input type="color" id="color-picker" />
-                </label>
-                <label htmlFor="range-slider">Threshold: 
-                    <input type="range" id="range-slider" min="0" max="455" defaultValue={50}/>
-                </label>
+            <div id="preview-page-cont">
+                <Image 
+                    className="preview-thumb"
+                    src={videoThumbnail || placeholderThumbnailImg} 
+                    alt='video thumbnail' 
+                    width={320}
+                    height={320}
+                />
+                <div className="image-target-select">
+                    <label htmlFor="color-picker">Target Color: 
+                        <input type="color" id="color-picker" />
+                    </label>
+                    <label htmlFor="range-slider">Threshold: 
+                        <input type="range" id="range-slider" min="0" max="455" defaultValue={50}/>
+                    </label>
+                </div>
+                <Image 
+                    className="preview-thumb"
+                    src={binarizedThumbnail || binarizedThumbnailImg} 
+                    alt='binarized thumbnail'
+                    width={320}
+                    height={320}
+                    placeholder="blur"
+                />
             </div>
-            <Image 
-                className="preview-thumb"
-                src={binarizedThumbnail || binarizedThumbnailImg} 
-                alt='binarized thumbnail'
-                width={320}
-                height={320}
-                placeholder="blur"
-            />
+            
             <div className="preview-controls">
                 <Results 
                     // video=
