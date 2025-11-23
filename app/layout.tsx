@@ -18,13 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <header>
-          <nav>
-            <ul>
-              <li>
-                <Link href="/">Front Page</Link></li>
-              <li>
-                <Link href="/videos">Video List</Link></li>
-            </ul>
+          <nav className="top-nav">
+            <Link href="/">Home</Link>
+            <Link href="/videos">Videos</Link>
           </nav>
         </header>
         {children}
