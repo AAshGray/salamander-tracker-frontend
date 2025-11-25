@@ -13,13 +13,18 @@ export default function Preview() {
     
     useEffect(() => {
         //actual fetch
-        
+
         // mock data
         Promise.resolve().then(() =>{
             setVideoThumbnail(placeholderThumbnailImg)
             setBinarizedThumbnail(binarizedThumbnailImg)
         })
     }, [])
+
+    const [sliderValue, setSliderValue] = useState(50)
+    const handleSliderChange = (event) => {
+        setSliderValue(event.target.value)
+    }
 
     return (
         <div id="preview-page">
@@ -36,8 +41,9 @@ export default function Preview() {
                         <input type="color" id="color-picker" />
                     </label>
                     <label htmlFor="range-slider">Threshold: 
-                        <input type="range" id="range-slider" min="0" max="455" defaultValue={50}/>
+                        <input type="range" id="range-slider" min="0" max="455" defaultValue={sliderValue} onChange={handleSliderChange}/>
                     </label>
+                    <p>Value: {sliderValue}</p>
                 </div>
                 <Image 
                     className="preview-thumb"
@@ -53,7 +59,7 @@ export default function Preview() {
                 <Results 
                     // video=
                     // targetColor=
-                    // threshold=
+                    threshold={sliderValue}
                 />
             </div>
         </div>
