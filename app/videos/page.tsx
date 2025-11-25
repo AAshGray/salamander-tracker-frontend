@@ -12,10 +12,13 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // fetchVideos().then(data => setVideos(data)).finally(() => setLoading(false));
-        Promise.resolve().then(() => {
-            setVideos(fakeVideos)
-        });
+        async function loadVideos() {
+            const vids = await fetchVideos();
+            console.log('Videos loaded in component:', vids);
+            setVideos(vids);
+        }
+
+        loadVideos();
     }, []);
 
     return (

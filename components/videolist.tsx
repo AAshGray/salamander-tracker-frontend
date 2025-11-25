@@ -13,10 +13,11 @@ export default function VideoList({ videos }: Props) {
   return (
     <ul>
       {videos.map((name, index) => (
-        <li key={index}>
+        <li key={index}>{name} &nbsp;
             <Link href={`/videos/preview?video=${encodeURIComponent(name)}`}>
-            {name}
-          </Link></li>
+            [Process]
+            </Link>
+        </li>
       ))}
     </ul>
   );
