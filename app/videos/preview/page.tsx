@@ -5,6 +5,7 @@ import Results from "@/components/results"
 import {useState, useEffect} from 'react'
 import placeholderThumbnailImg from '@/mock/thumbnail/Thumbnail.jpg'
 import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
+import { useSearchParams } from "next/navigation"
 
 export default function Preview() {
     const [videoThumbnail, setVideoThumbnail] = useState(placeholderThumbnailImg)
@@ -30,6 +31,9 @@ export default function Preview() {
     const handleColorChange = (event) => {
         setColorValue(event.target.value)
     }
+
+    const searchParam = useSearchParams()
+    const videoParam = searchParam.get('video')
 
     return (
         <div id="preview-page">
@@ -63,7 +67,7 @@ export default function Preview() {
             
             <div className="preview-controls">
                 <Results 
-                    // video=
+                    video={videoParam}
                     targetColor={colorValue}
                     threshold={sliderValue}
                 />
