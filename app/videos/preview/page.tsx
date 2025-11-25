@@ -5,6 +5,7 @@ import Results from "@/components/results"
 import {useState, useEffect} from 'react'
 import placeholderThumbnailImg from '@/mock/thumbnail/Thumbnail.jpg'
 import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
+import { useSearchParams } from "next/navigation"
 
 export default function Preview() {
     const [videoThumbnail, setVideoThumbnail] = useState(placeholderThumbnailImg)
@@ -13,13 +14,26 @@ export default function Preview() {
     
     useEffect(() => {
         //actual fetch
-        
+
         // mock data
         Promise.resolve().then(() =>{
             setVideoThumbnail(placeholderThumbnailImg)
             setBinarizedThumbnail(binarizedThumbnailImg)
         })
     }, [])
+
+    const [sliderValue, setSliderValue] = useState(50)
+    const handleSliderChange = (event) => {
+        setSliderValue(event.target.value)
+    }
+
+    const [colorValue, setColorValue] = useState('#000000')
+    const handleColorChange = (event) => {
+        setColorValue(event.target.value)
+    }
+
+    const searchParam = useSearchParams()
+    const videoParam = searchParam.get('video')
 
     return (
         <div id="preview-page">
@@ -33,11 +47,13 @@ export default function Preview() {
                 />
                 <div className="image-target-select">
                     <label htmlFor="color-picker">Target Color: 
-                        <input type="color" id="color-picker" />
+                        <input type="color" id="color-picker" defaultValue={colorValue} onChange={handleColorChange}/>
                     </label>
+                    <p>Color: {colorValue}</p>
                     <label htmlFor="range-slider">Threshold: 
-                        <input type="range" id="range-slider" min="0" max="455" defaultValue={50}/>
+                        <input type="range" id="range-slider" min="0" max="455" defaultValue={sliderValue} onChange={handleSliderChange}/>
                     </label>
+                    <p>Value: {sliderValue}</p>
                 </div>
                 <Image 
                     className="preview-thumb"
@@ -51,9 +67,9 @@ export default function Preview() {
             
             <div className="preview-controls">
                 <Results 
-                    // video=
-                    // targetColor=
-                    // threshold=
+                    video={videoParam}
+                    targetColor={colorValue}
+                    threshold={sliderValue}
                 />
             </div>
         </div>
