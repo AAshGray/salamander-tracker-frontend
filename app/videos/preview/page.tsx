@@ -26,6 +26,11 @@ export default function Preview() {
         setSliderValue(event.target.value)
     }
 
+    const [colorValue, setColorValue] = useState('#000000')
+    const handleColorChange = (event) => {
+        setColorValue(event.target.value)
+    }
+
     return (
         <div id="preview-page">
             <div id="preview-page-cont">
@@ -38,8 +43,9 @@ export default function Preview() {
                 />
                 <div className="image-target-select">
                     <label htmlFor="color-picker">Target Color: 
-                        <input type="color" id="color-picker" />
+                        <input type="color" id="color-picker" defaultValue={colorValue} onChange={handleColorChange}/>
                     </label>
+                    <p>Color: {colorValue}</p>
                     <label htmlFor="range-slider">Threshold: 
                         <input type="range" id="range-slider" min="0" max="455" defaultValue={sliderValue} onChange={handleSliderChange}/>
                     </label>
@@ -58,7 +64,7 @@ export default function Preview() {
             <div className="preview-controls">
                 <Results 
                     // video=
-                    // targetColor=
+                    targetColor={colorValue}
                     threshold={sliderValue}
                 />
             </div>
