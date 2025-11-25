@@ -29,7 +29,7 @@ body {
   */
 }
 
-div.flex{
+div.launch-center{
   /*
   Make image only on main page
   */
@@ -38,27 +38,28 @@ div.flex{
   display: flex;
 }
 
-.flex {
-  background-color: #ffebd666;
+.launch-card {
+  background-color: #ffebd630;
   justify-content: center;
+  padding: 10px;
 }
 
 /*
 figure out how to style Links
 */
-link:any-link {
+/* link:any-link {
   background-color: #794e0a;
   border: 3px;
   border-style: groove;
   color:#ffffff;
-}
+} */
 
 /*
 */
-link:hover {
+/* link:hover {
   background-color: #538eeb;
   color:#0a0a0a;
-}
+} */
 
 /*
 */
