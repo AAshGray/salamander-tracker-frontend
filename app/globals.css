@@ -132,10 +132,10 @@ header {
   margin-top: 0.9rem;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  background: rgba(125,211,252,0.08);
-  color: #7dd3fc;
+  background-color: #794f0a39;
+  color: #794e0a;
   text-decoration: none;
-  border: 1px solid rgba(125,211,252,0.12);
+  border: 1px solid #794f0a39;
 }
 
 /* minimal horizontal top nav */
