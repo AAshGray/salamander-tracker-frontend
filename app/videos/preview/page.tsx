@@ -6,14 +6,26 @@ import {useState, useEffect} from 'react'
 import placeholderThumbnailImg from '@/mock/thumbnail/Thumbnail.jpg'
 import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
 import { useSearchParams } from "next/navigation"
+import { fetchThumbnail } from "@/lib/fetch"
 
 export default function Preview() {
     const [videoThumbnail, setVideoThumbnail] = useState(placeholderThumbnailImg)
     const [binarizedThumbnail, setBinarizedThumbnail] = useState(binarizedThumbnailImg)
 
+    const searchParam = useSearchParams()
+    const videoParam = searchParam.get('video')
     
     useEffect(() => {
         //actual fetch
+        async function loadThumbnail() {
+            try{
+                const thumbImage = await fetchThumbnail(videoParam)
+                console.log('Image added to component')
+                setVideoThumbnail(thumbImage)
+            } catch {
+                console.log("Couldn't get image from API")
+            }
+        }
 
         // mock data
         Promise.resolve().then(() =>{
@@ -32,8 +44,6 @@ export default function Preview() {
         setColorValue(event.target.value)
     }
 
-    const searchParam = useSearchParams()
-    const videoParam = searchParam.get('video')
 
     return (
         <div id="preview-page">
