@@ -22,7 +22,7 @@ export default function Results({threshold, targetColor, video}) {
                 // })
                 // if (!res.ok) throw new Error('Job request failed')
                 // handle response if needed
-                const jobId = await processVideo(video)
+                const jobId = await processVideo(video, targetColor, threshold)
                 console.log(`Job being processed with id: ${jobId}`)
             } catch (err) {
                 console.error(err)
