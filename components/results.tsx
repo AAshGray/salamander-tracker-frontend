@@ -2,6 +2,7 @@
 import { useParams } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
+import {processVideo, getJobStatus} from "@/lib/fetch"
 
 export default function Results({threshold, targetColor, video}) {
     const params = useParams()
@@ -21,10 +22,12 @@ export default function Results({threshold, targetColor, video}) {
                 // })
                 // if (!res.ok) throw new Error('Job request failed')
                 // handle response if needed
+                const jobId = await processVideo(video)
+                console.log(`Job being processed with id: ${jobId}`)
             } catch (err) {
                 console.error(err)
             } finally {
-                // setProcessing(false)
+                setProcessing(false)
             }
         }
     }
@@ -38,6 +41,9 @@ export default function Results({threshold, targetColor, video}) {
             ) : (
                 <p>Processing...</p>
             )}
+
+            {/* Make an element to show completed job */}
+
         </div>
     )
 }
