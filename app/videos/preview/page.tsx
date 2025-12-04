@@ -9,8 +9,8 @@ import { useSearchParams } from "next/navigation"
 import { fetchThumbnail } from "@/lib/fetch"
 
 export default function Preview() {
-    const [videoThumbnail, setVideoThumbnail] = useState(placeholderThumbnailImg)
-    const [binarizedThumbnail, setBinarizedThumbnail] = useState(binarizedThumbnailImg)
+    const [videoThumbnail, setVideoThumbnail] = useState(<Image src={placeholderThumbnailImg} alt="video thumbnail" width={320} height={320} />)
+    const [binarizedThumbnail, setBinarizedThumbnail] = useState(<Image src={binarizedThumbnailImg} alt="binarized thumbnail" width={320} height={320} />)
 
     const searchParam = useSearchParams()
     const videoParam = searchParam.get('video')
@@ -19,19 +19,20 @@ export default function Preview() {
         //actual fetch
         async function loadThumbnail() {
             try{
-                const thumbImage = await fetchThumbnail(videoParam)
-                console.log('Image added to component')
-                setVideoThumbnail(thumbImage)
+                const thumbBlob = await fetchThumbnail(videoParam)
+                console.log("Thumbnail fetched");
+                const thumbImage = URL.createObjectURL(thumbBlob)
+                setVideoThumbnail(<Image src={thumbImage} alt="video thumbnail" width={320} height={320} />)
             } catch {
                 console.log("Couldn't get image from API")
             }
         }
-
-        // mock data
-        Promise.resolve().then(() =>{
-            setVideoThumbnail(placeholderThumbnailImg)
-            setBinarizedThumbnail(binarizedThumbnailImg)
-        })
+        loadThumbnail()
+        // // mock data
+        // Promise.resolve().then(() =>{
+        //     setVideoThumbnail(<Image src={placeholderThumbnailImg} alt="video thumbnail" width={320} height={320} />)
+        //     setBinarizedThumbnail(<Image src={binarizedThumbnailImg} alt="binarized thumbnail" width={320} height={320} />)
+        // })
     }, [])
 
     const [sliderValue, setSliderValue] = useState(50)
@@ -51,13 +52,7 @@ export default function Preview() {
     return (
         <div id="preview-page">
             <div id="preview-page-cont">
-                <Image 
-                    className="preview-thumb"
-                    src={videoThumbnail || placeholderThumbnailImg} 
-                    alt='video thumbnail' 
-                    width={320}
-                    height={320}
-                />
+                {videoThumbnail}
                 <div className="image-target-select">
                     <label htmlFor="color-picker">Target Color: 
                         <input type="color" id="color-picker" defaultValue={colorValue} onChange={handleColorChange}/>
@@ -68,14 +63,7 @@ export default function Preview() {
                     </label>
                     <p>Value: {sliderValue}</p>
                 </div>
-                <Image 
-                    className="preview-thumb"
-                    src={binarizedThumbnail || binarizedThumbnailImg} 
-                    alt='binarized thumbnail'
-                    width={320}
-                    height={320}
-                    placeholder="blur"
-                />
+                {binarizedThumbnail}
             </div>
             
             <div className="preview-controls">
