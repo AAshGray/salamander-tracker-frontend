@@ -7,6 +7,10 @@ import {processVideo, getJobStatus} from "@/lib/fetch"
 export default function Results({threshold, targetColor, video}) {
     const params = useParams()
     const [processing, setProcessing] = useState(false)
+    const [urls, setUrls] = useState<string[]>([])
+    const addUrl = (newUrl) => {
+        setUrls(prev => [...prev, newUrl])
+    }
 
     async function process() {
         if (!processing) {
@@ -40,6 +44,11 @@ export default function Results({threshold, targetColor, video}) {
                         }
                         console.log(`Current Job status: ${updatedJob.status}`)
 
+                        if(updatedJob.status === "done") {
+                            clearInterval(checkInterval)
+                            console.log(`Job completed! URL: ${updatedJob.result}`)
+                            addUrl(updatedJob.result)
+                        }
                     } catch(err) {
                         console.log(`Error checking job status: ${err}`)
                         // stops from doing the check
