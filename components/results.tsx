@@ -65,17 +65,30 @@ export default function Results({threshold, targetColor, video}) {
     }
 
     return (
-        <div className="preview-controls">
-            {!processing ? (
-                <button className="preview-link" onClick={process}>
-                    Start processing
-                </button>
-            ) : (
-                <p>Processing...</p>
-            )}
-
+        <>
+            <div className="preview-controls">
+                {!processing ? (
+                    <button className="preview-link" onClick={process}>
+                        Start processing
+                    </button>
+                ) : (
+                    <p>Processing...</p>
+                )}
+            </div>
             {/* Make an element to show completed job */}
-
-        </div>
+            <div className="job-list">
+                {urls.length === 0 ? (
+                    <p>No files available</p>
+                ) : (
+                    <ul className="url-links">
+                        {urls.map((url) => (
+                            <li key={url}>
+                                {url}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        </>
     )
 }
