@@ -44,6 +44,9 @@ export default function Preview() {
         setColorValue(event.target.value)
     }
 
+    function toHexColor(color) {
+        return color.replace("#", "")
+    }
 
     return (
         <div id="preview-page">
@@ -78,7 +81,7 @@ export default function Preview() {
             <div className="preview-controls">
                 <Results 
                     video={videoParam}
-                    targetColor={colorValue}
+                    targetColor={toHexColor(colorValue)}
                     threshold={sliderValue}
                 />
             </div>
