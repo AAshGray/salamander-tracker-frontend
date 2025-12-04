@@ -47,7 +47,7 @@ export default function Results({threshold, targetColor, video}) {
                         if(updatedJob.status === "done") {
                             clearInterval(checkInterval)
                             console.log(`Job completed! URL: ${updatedJob.result}`)
-                            addUrl(updatedJob.result)
+                            addUrl(`http://localhost:3000${updatedJob.result}`)
                         }
                     } catch(err) {
                         console.log(`Error checking job status: ${err}`)
@@ -83,7 +83,8 @@ export default function Results({threshold, targetColor, video}) {
                     <ul className="url-links">
                         {urls.map((url) => (
                             <li key={url}>
-                                {url}
+                                {/* Placeholder text */}
+                               <a href={url}>Download</a>
                             </li>
                         ))}
                     </ul>
