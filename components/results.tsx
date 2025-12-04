@@ -22,8 +22,31 @@ export default function Results({threshold, targetColor, video}) {
                 // })
                 // if (!res.ok) throw new Error('Job request failed')
                 // handle response if needed
-                const jobId = await processVideo(video, targetColor, threshold)
+                const job = await processVideo(video, targetColor, threshold)
+                const jobId = job.jobId || job.error
                 console.log(`Job being processed with id: ${jobId}`)
+
+                // to check the status using a poll
+                const checkInterval = setInterval(async () => {
+                    try {
+                        const updatedJob = await getJobStatus(jobId)
+
+                        // checks if error key exists first
+                        if(updatedJob.error) {
+                            console.log(updatedJob.error)
+                            // stops from doing the check
+                            clearInterval(checkInterval)
+                            return
+                        }
+                        console.log(`Current Job status: ${updatedJob.status}`)
+
+                    } catch(err) {
+                        console.log(`Error checking job status: ${err}`)
+                        // stops from doing the check
+                        clearInterval(checkInterval)
+                    }
+                }, 2000)
+
             } catch (err) {
                 console.error(err)
             } finally {
