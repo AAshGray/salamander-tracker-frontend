@@ -64,6 +64,11 @@ export default function Results({threshold, targetColor, video}) {
         }
     }
 
+    function fileName(path) {
+        const name = path.split("/").pop().split(".")[0]
+        return name
+    }
+
     return (
         <>
             <div className="preview-controls">
@@ -84,7 +89,7 @@ export default function Results({threshold, targetColor, video}) {
                         {urls.map((url) => (
                             <li key={url}>
                                 {/* Placeholder text */}
-                               <a href={url}>Download</a>
+                               <a href={url}>{fileName(url)}</a>
                             </li>
                         ))}
                     </ul>
