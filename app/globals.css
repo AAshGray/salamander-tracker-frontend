@@ -45,23 +45,6 @@ div.launch-center{
 }
 
 /*
-figure out how to style Links
-*/
-/* link:any-link {
-  background-color: #794e0a;
-  border: 3px;
-  border-style: groove;
-  color:#ffffff;
-} */
-
-/*
-*/
-/* link:hover {
-  background-color: #538eeb;
-  color:#0a0a0a;
-} */
-
-/*
 */
 button {
   background-color:#fab74d;
@@ -75,10 +58,35 @@ button {
   margin: auto;
 }
 
+.job-list, .preview-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-controls {
+  align-items: stretch;
+  text-align: center;
+}
+
+.pop-text, .preview-link, h1 {
+  font-weight: bold;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
 /*
 */
 button:hover {
   background-color: #538eeb;
+}
+
+a {
+  color:#ffe8c4;
+}
+a:hover {
+  color:#fab74d;
 }
 
 #video-page {

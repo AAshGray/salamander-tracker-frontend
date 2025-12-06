@@ -71,7 +71,7 @@ export default function Results({ threshold, targetColor, video }) {
                         Start processing
                     </button>
                 ) : (
-                    <p>{status}</p>
+                    <p className="pop-text">{status}</p>
                 )}
             </div>
 
@@ -82,7 +82,7 @@ export default function Results({ threshold, targetColor, video }) {
                     <ul className="url-links">
                         {urls.map((url) => (
                             <li key={url}>
-                                Download results for <a href={url} style={{color: "orange"}}>{fileName(url)}</a>
+                                Download results for <a href={url} className="csv-download">{fileName(url)}</a>
                             </li>
                         ))}
                     </ul>

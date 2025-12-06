@@ -43,7 +43,7 @@ export default function VideoList({ videos, loading, error }: Props) {
             {availableFiles[name] && (
               <>
                 &nbsp;
-                <a href={`http://localhost:3000/results/${encodeURIComponent(name.replace(/\.[^/.]+$/, ".csv"))}`}>[Download CSV]</a>
+                <a href={`http://localhost:3000/results/${encodeURIComponent(name.replace(/\.[^/.]+$/, ".csv"))}`} className='csv-download'>[Download CSV]</a>
               </>
             )}
         </li>
