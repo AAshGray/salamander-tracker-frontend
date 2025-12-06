@@ -7,43 +7,54 @@ import placeholderThumbnailImg from '@/mock/thumbnail/Thumbnail.jpg'
 import binarizedThumbnailImg from '@/mock/thumbnail/Binarized.jpg'
 import { useSearchParams } from "next/navigation"
 import { fetchThumbnail } from "@/lib/fetch"
+import processImage from "@/lib/binarizer"
 
 export default function Preview() {
     const [videoThumbnail, setVideoThumbnail] = useState(<Image src={placeholderThumbnailImg} alt="video thumbnail" width={320} height={320} />)
     const [binarizedThumbnail, setBinarizedThumbnail] = useState(<Image src={binarizedThumbnailImg} alt="binarized thumbnail" width={320} height={320} />)
+    const [thumbBlob, setThumbBlob] = useState<Blob | null>(null);
+    const [sliderValue, setSliderValue] = useState(50)
+    const [colorValue, setColorValue] = useState('#000000')
 
     const searchParam = useSearchParams()
     const videoParam = searchParam.get('video')
+
+    const handleSliderChange = (event) => {
+        setSliderValue(event.target.value)
+    }
+
+    const handleColorChange = (event) => {
+        setColorValue(event.target.value)
+    }
     
     useEffect(() => {
         //actual fetch
+        if (!videoParam) return;
+
         async function loadThumbnail() {
             try{
                 const thumbBlob = await fetchThumbnail(videoParam)
                 console.log("Thumbnail fetched");
                 const thumbImage = URL.createObjectURL(thumbBlob)
-                setVideoThumbnail(<Image src={thumbImage} alt="video thumbnail" width={320} height={320} />)
+                setVideoThumbnail(<Image src={thumbImage} alt="video thumbnail" width={320} height={320} unoptimized />)
+                setThumbBlob(thumbBlob)
             } catch {
                 console.log("Couldn't get image from API")
             }
         }
         loadThumbnail()
-        // // mock data
-        // Promise.resolve().then(() =>{
-        //     setVideoThumbnail(<Image src={placeholderThumbnailImg} alt="video thumbnail" width={320} height={320} />)
-        //     setBinarizedThumbnail(<Image src={binarizedThumbnailImg} alt="binarized thumbnail" width={320} height={320} />)
-        // })
-    }, [])
+    }, [videoParam])
 
-    const [sliderValue, setSliderValue] = useState(50)
-    const handleSliderChange = (event) => {
-        setSliderValue(event.target.value)
-    }
+    useEffect(() => {
+        if (!thumbBlob || !colorValue || !sliderValue) return;
 
-    const [colorValue, setColorValue] = useState('#000000')
-    const handleColorChange = (event) => {
-        setColorValue(event.target.value)
-    }
+        async function loadBinarized() {
+            const binDataUrl = await processImage(thumbBlob, colorValue, sliderValue)
+            setBinarizedThumbnail(<Image src={binDataUrl} alt="binarized thumbnail" width={320} height={320} unoptimized />)
+        }
+        loadBinarized()
+    }, [colorValue, sliderValue, thumbBlob])
+
 
     function toHexColor(color) {
         return color.replace("#", "")

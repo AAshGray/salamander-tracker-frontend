@@ -2,71 +2,65 @@
 import { useParams } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
-import {processVideo, getJobStatus} from "@/lib/fetch"
+import { processVideo, getJobStatus } from "@/lib/fetch"
 
-export default function Results({threshold, targetColor, video}) {
-    const params = useParams()
+export default function Results({ threshold, targetColor, video }) {
     const [processing, setProcessing] = useState(false)
     const [urls, setUrls] = useState<string[]>([])
-    const addUrl = (newUrl) => {
+    const [status, setStatus] = useState<string | null>(null)
+
+    const addUrl = (newUrl: string) => {
         setUrls(prev => [...prev, newUrl])
     }
 
     async function process() {
-        if (!processing) {
-            console.log(`Processing video with video ${video}, target color ${targetColor}, threshold ${threshold}`)
-            setProcessing(true)
+        if (processing) return
 
-            try {
-                // replace with your job endpoint / payload
-                // const res = await fetch('/api/process-job', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ params }),
-                // })
-                // if (!res.ok) throw new Error('Job request failed')
-                // handle response if needed
-                const job = await processVideo(video, targetColor, threshold)
-                const jobId = job.jobId || job.error
-                console.log(`Job being processed with id: ${jobId}`)
+        setProcessing(true)
+        setStatus(`Processing video ${video}, target color ${targetColor}, threshold ${threshold}`)
 
-                // to check the status using a poll
-                const checkInterval = setInterval(async () => {
-                    try {
-                        const updatedJob = await getJobStatus(jobId)
+        try {
+            const job = await processVideo(video, targetColor, threshold)
+            const jobId = job.jobId || job.error
 
-                        // checks if error key exists first
-                        if(updatedJob.error) {
-                            console.log(updatedJob.error)
-                            // stops from doing the check
-                            clearInterval(checkInterval)
-                            return
-                        }
-                        console.log(`Current Job status: ${updatedJob.status}`)
+            setStatus(`Job in process with id: ${jobId}`)
 
-                        if(updatedJob.status === "done") {
-                            clearInterval(checkInterval)
-                            console.log(`Job completed! URL: ${updatedJob.result}`)
-                            addUrl(`http://localhost:3000${updatedJob.result}`)
-                        }
-                    } catch(err) {
-                        console.log(`Error checking job status: ${err}`)
-                        // stops from doing the check
-                        clearInterval(checkInterval)
+            const interval = setInterval(async () => {
+                try {
+                    const updatedJob = await getJobStatus(jobId)
+
+                    if (updatedJob.error) {
+                        console.log(updatedJob.error)
+                        clearInterval(interval)
+                        setProcessing(false)
+                        setStatus(`Processing error: ${updatedJob.error}`)
+                        return
                     }
-                }, 2000)
 
-            } catch (err) {
-                console.error(err)
-            } finally {
-                setProcessing(false)
-            }
+                    setStatus(`Current Job status: ${updatedJob.status}`)
+
+                    if (updatedJob.status === "done") {
+                        clearInterval(interval)
+                        setStatus(`Job completed! URL: ${updatedJob.result}`)
+
+                        addUrl(`http://localhost:3000${updatedJob.result}`)
+                        setProcessing(false)
+                    }
+                } catch (err) {
+                    setStatus("Error checking job status:", err)
+                    clearInterval(interval)
+                    setProcessing(false)
+                }
+            }, 2000)
+
+        } catch (err) {
+            console.error(err)
+            setProcessing(false)
         }
     }
 
-    function fileName(path) {
-        const name = path.split("/").pop().split(".")[0]
-        return name
+    function fileName(path: string) {
+        return path.split("/").pop()?.split(".")[0]
     }
 
     return (
@@ -77,10 +71,10 @@ export default function Results({threshold, targetColor, video}) {
                         Start processing
                     </button>
                 ) : (
-                    <p>Processing...</p>
+                    <p>{status}</p>
                 )}
             </div>
-            {/* Make an element to show completed job */}
+
             <div className="job-list">
                 {urls.length === 0 ? (
                     <p>No files available</p>
@@ -88,8 +82,7 @@ export default function Results({threshold, targetColor, video}) {
                     <ul className="url-links">
                         {urls.map((url) => (
                             <li key={url}>
-                                {/* Placeholder text */}
-                               <a href={url}>{fileName(url)}</a>
+                                Download results for <a href={url} style={{color: "orange"}}>{fileName(url)}</a>
                             </li>
                         ))}
                     </ul>
