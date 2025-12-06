@@ -26,6 +26,4 @@ Once you are satisfied, you can press the button labeled ```Start Processing```.
 Under the ```Start Processing``` button is either text saying ```No files available``` or, if a video has been processed on that page, the download link.  
 The nav bar at the top can take you back to either the home or video page.  
 
-### Basic Use
-
 ### Modifying for Development/Other Projects
